@@ -1,9 +1,10 @@
 ;
-class kaleido {
-	constructor({container = '#app', segments = 30, strokeWidth = 0.3, bgcolour = '#FFF' }) {
+let showGuideOrNot = true
+class Kaleido {
+	constructor({container = '#app', segments = 30, strokeWidth = 0.3 }) {
 		this.segments = segments
 		this.strokeWidth = strokeWidth
-		this.bgcolour = bgcolour
+		this.bgcolor = '#FFF'
 		this.container = container
 
 		this.drawing = false
@@ -13,6 +14,9 @@ class kaleido {
 	init() {
 		this.canvas = document.createElement('canvas')
 		this.guide = document.createElement('canvas')
+		this.canvas.setAttribute('class', 'canvas')
+		this.guide.setAttribute('class', 'guide')
+		this.guide.style.opacity = showGuideOrNot ? 1 : 0
 		this.ctx = this.canvas.getContext("2d")
 		this.guidectx = this.guide.getContext("2d")
 		this.width = window.innerWidth
@@ -36,7 +40,7 @@ class kaleido {
 		ctx.clearRect(0, 0, this.width, this.height)
 
 		ctx.lineWidth = 0.5
-		ctx.strokeStyle = this.bgcolour === "#FFF" ? "rgba(0,0,0,0.2)" : "rgba(255,255,255,0.2)"
+		ctx.strokeStyle = this.bgcolor === "#FFF" ? "rgba(0,0,0,0.2)" : "rgba(255,255,255,0.2)"
 		ctx.lineCap = "round"
 
 		ctx.save()
@@ -99,6 +103,15 @@ class kaleido {
 			ctx.closePath()
 			ctx.restore()
 		}
+	}
+	delete() {
+		document.querySelector(this.container).innerHTML = ''
+	}
+	showGuide() {
+		let o = this.guide.style.opacity
+		if (o == undefined || o == '') o = 1
+		this.guide.style.opacity = ~~!(o * 1)
+		showGuideOrNot = !(o * 1)
 	}
 }
 

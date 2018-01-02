@@ -9,3 +9,8 @@ canvas {
 	top: 0;
 	left: 0;
 }
+
+.intro {
+	opacity: .8;
+	margin: 20px;
+}
